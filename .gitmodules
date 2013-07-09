@@ -1,3 +1,6 @@
 [submodule "web/foundation"]
 	path = web/foundation
 	url = https://github.com/zurb/foundation.git
+[submodule "web/normalize"]
+	path = web/normalize
+	url = https://github.com/necolas/normalize.css.git
