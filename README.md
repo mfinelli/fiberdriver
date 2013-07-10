@@ -10,5 +10,6 @@ Goals
 - Modular
 - Mobile friendly
 
-
 Fiberdriver will be centered around *tasks* instead of *software*.
+
+Fiberdriver will install a webserver automatically. The default is nginx but it will be possible to choose apache and possibly others during install.
