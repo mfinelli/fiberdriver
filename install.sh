@@ -50,13 +50,14 @@ confirm || { echo "Installation aborted."; exit 4; }
 for manager in "${!managers[@]}"
 do
 	if [ -f $manager ]; then
-		MANAGER="${managers[$manager]}"
+		MANAGER=${managers[$manager]}
 		continue
 	fi
 done
 
 # make sure we can find the package manager
-if hash ${MANAGER} 2>/dev/null; then
+# TODO: add ability to manually specify package manager
+if hash $MANAGER 2>/dev/null; then
 	echo -n "Your package manager seems to be ${MANAGER}. Is this correct? "
 	confirm || { echo "Installation aborted."; exit 5; }
 else
