@@ -7,6 +7,14 @@ if [ $(id -u) != "0" ]; then
 	exit 1
 fi
 
+# package managers
+declare -A managers
+managers[/etc/redhat-release]=yum
+managers[/etc/arch-release]=pacman
+managers[/etc/arch-release]=emerge
+managers[/etc/SuSE-release]=zypp
+managers[/etc/debian_version]=apt-get
+
 # alert the user that a program was not found and exit
 function software_not_found {
 	echo "Could not find required program ${1}" 1>&2
@@ -36,4 +44,22 @@ hash awk 2>/dev/null || software_not_found "awk"
 # let's get the OS information and ask the user if it looks correct
 OS=$(cat /etc/os-release | grep '^PRETTY_NAME' | awk -F= '{ print $2 }')
 echo -n "You appear to be using ${OS}. Is this correct? "
-confirm || { echo "Installation aborted."; exit 1; }
+confirm || { echo "Installation aborted."; exit 4; }
+
+# probe for the package manager and ask the user if it's right
+for manager in "${!managers[@]}"
+do
+	if [ -f $manager ]; then
+		MANAGER="${managers[$manager]}"
+		continue
+	fi
+done
+
+# make sure we can find the package manager
+if hash ${MANAGER} 2>/dev/null; then
+	echo -n "Your package manager seems to be ${MANAGER}. Is this correct? "
+	confirm || { echo "Installation aborted."; exit 5; }
+else
+	echo "Could not determine your package manager."
+	exit 5;
+fi
