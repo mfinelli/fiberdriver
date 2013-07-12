@@ -11,7 +11,7 @@ fi
 declare -A managers
 managers[/etc/redhat-release]=yum
 managers[/etc/arch-release]=pacman
-managers[/etc/gentoo-release]=emerge
+#managers[/etc/gentoo-release]=emerge
 managers[/etc/SuSE-release]=zypper
 managers[/etc/debian_version]=apt-get
 
@@ -69,7 +69,7 @@ fi
 case $MANAGER in
 	yum|apt-get ) INSTALL="${MANAGER} -y install" ;;
 	pacman ) INSTALL="pacman -S --noconfirm" ;;
-	emerge ) INSTALL="emerge" ;;
+#	emerge ) INSTALL="emerge" ;;
 	zypper ) INSTALL="zypper install" ;;
 	* ) echo "Unidentifed error"; exit 6; ;;
 esac
