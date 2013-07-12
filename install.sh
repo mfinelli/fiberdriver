@@ -7,7 +7,7 @@ if [ $(id -u) != "0" ]; then
 	exit 1
 fi
 
-# package managers
+# package managers (@see line 69 if these options change)
 declare -A managers
 managers[/etc/redhat-release]=yum
 managers[/etc/arch-release]=pacman
@@ -64,3 +64,12 @@ else
 	echo "Could not determine your package manager."
 	exit 5;
 fi
+
+# get the install command from the package manager
+case $MANAGER in
+	yum|apt-get ) INSTALL="${MANAGER} -y install" ;;
+	pacman ) INSTALL="pacman -S --noconfirm" ;;
+	emerge ) INSTALL="emerge" ;;
+	zypper ) INSTALL="zypper install" ;;
+	* ) echo "Unidentifed error"; exit 6; ;;
+esac
