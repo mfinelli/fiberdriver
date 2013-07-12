@@ -11,8 +11,8 @@ fi
 declare -A managers
 managers[/etc/redhat-release]=yum
 managers[/etc/arch-release]=pacman
-managers[/etc/arch-release]=emerge
-managers[/etc/SuSE-release]=zypp
+managers[/etc/gentoo-release]=emerge
+managers[/etc/SuSE-release]=zypper
 managers[/etc/debian_version]=apt-get
 
 # alert the user that a program was not found and exit
