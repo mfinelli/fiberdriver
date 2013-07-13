@@ -85,8 +85,11 @@ esac
 $INSTALL nginx $PHP ruby
 
 # install gems
-#gem update --system
-gem install compass
+if [ gem list -i compass = "true" ]; then
+	gem update compass
+else
+	gem install compass
+fi
 
 INSTALLTO=/var/local/fiberdriver
 # create the fiberdriver serve directory
