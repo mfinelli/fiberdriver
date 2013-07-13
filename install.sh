@@ -95,6 +95,15 @@ mkdir -p $INSTALLTO
 # create the compass project
 compass create $INSTALLTO --css-dir "css" --javascripts-dir "js"
 
+
+# get the directory installing from
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+	THISDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+	SOURCE="$(readlink "$SOURCE")"
+	[[ $SOURCE != /* ]] && SOURCE="$THISDIR/$SOURCE"
+done
+THISDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 # copy fiberdriver files to the install directory
 
 # compile the scss into css
