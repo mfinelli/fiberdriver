@@ -92,3 +92,11 @@ gem install compass
 
 # create the fiberdriver serve directory
 mkdir -p /var/local/fiberdriver
+
+# create the compass project
+compass create /var/local/fiberdriver --css-dir "css" --javascripts-dir "js"
+
+# copy fiberdriver files to the install directory
+
+# compile the scss into css
+compass compile /var/local/fiberdriver
