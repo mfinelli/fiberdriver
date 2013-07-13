@@ -97,6 +97,7 @@ compass create $INSTALLTO --css-dir "css" --javascripts-dir "js"
 
 
 # get the directory installing from
+unset CDPATH
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do
 	THISDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
