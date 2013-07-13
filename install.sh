@@ -84,3 +84,9 @@ case $MANAGER in
 	* ) echo "Unidentified error"; exit 6; ;;
 esac
 $INSTALL $PHP
+
+# install ruby and the compass gem
+$INSTALL ruby
+#gem update --system
+gem install compass
+
