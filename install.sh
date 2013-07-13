@@ -88,11 +88,12 @@ $INSTALL nginx $PHP ruby
 #gem update --system
 gem install compass
 
+INSTALLTO=/var/local/fiberdriver
 # create the fiberdriver serve directory
-mkdir -p /var/local/fiberdriver
+mkdir -p $INSTALLTO
 
 # create the compass project
-compass create /var/local/fiberdriver --css-dir "css" --javascripts-dir "js"
+compass create $INSTALLTO --css-dir "css" --javascripts-dir "js"
 
 # copy fiberdriver files to the install directory
 
