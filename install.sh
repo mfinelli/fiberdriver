@@ -74,19 +74,17 @@ case $MANAGER in
 	* ) echo "Unidentifed error"; exit 6; ;;
 esac
 
-# install the nginx web server
-$INSTALL nginx
-
 # install php and php-fpm
 case $MANAGER in
 	apt-get|zypper ) PHP="php5 php5-fpm" ;;
 	yum|pacman ) PHP="php php-fpm" ;;
 	* ) echo "Unidentified error"; exit 6; ;;
 esac
-$INSTALL $PHP
 
-# install ruby and the compass gem
-$INSTALL ruby
+# install software
+$INSTALL nginx $PHP ruby
+
+# install gems
 #gem update --system
 gem install compass
 
