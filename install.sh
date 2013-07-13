@@ -116,13 +116,13 @@ cp "${THISDIR}/web/config.rb" $INSTALLTO/config.rb
 # copy javascript
 cp "${THISDIR}/web/foundation/js/vendor/custom.modernizr.js" $INSTALLTO/js/custom.modernizr.js
 cp "${THISDIR}/web/foundation/js/vendor/jquery.js" $INSTALLTO/js/jquery.js
-cp "${THISDIR}/web/foundation/js/foundation/foundation*.js" $INSTALLTO/js/
+cp "${THISDIR}"/web/foundation/js/foundation/foundation*.js $INSTALLTO/js/
 # copy scss
 cp "${THISDIR}/web/fiberdriver.scss" $INSTALLTO/sass/fiberdriver.scss
 cp "${THISDIR}/web/foundation/scss/normalize.scss" $INSTALLTO/sass/normalize.scss
 cp "${THISDIR}/web/foundation/scss/foundation.scss" $INSTALLTO/sass/foundation.scss
 cp "${THISDIR}/web/foundation/scss/foundation/_variables.scss" $INSTALLTO/sass/foundation/_variables.scss
-cp "${THISDIR}/web/foundation/scss/foundation/components/*" $INSTALLTO/sass/foundation/components/
+cp "${THISDIR}"/web/foundation/scss/foundation/components/*.scss $INSTALLTO/sass/foundation/components/
 
 # compile the scss into css
 compass compile /var/local/fiberdriver
