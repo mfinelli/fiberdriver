@@ -95,7 +95,6 @@ mkdir -p $INSTALLTO
 # create the compass project
 compass create $INSTALLTO --css-dir "css" --javascripts-dir "js"
 
-
 # get the directory installing from
 unset CDPATH
 SOURCE="${BASH_SOURCE[0]}"
@@ -105,8 +104,22 @@ while [ -h "$SOURCE" ]; do
 	[[ $SOURCE != /* ]] && SOURCE="$THISDIR/$SOURCE"
 done
 THISDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+# create directories if missing
+mkdir -p $INSTALLTO/js $INSTALLTO/sass $INSTALLTO/css $INSTALLTO/sass/foundation/components
+
 # copy fiberdriver files to the install directory
 cp "${THISDIR}/web/config.rb" $INSTALLTO/config.rb
+# copy javascript
+cp "${THISDIR}/web/foundation/js/vendor/custom.modernizr.js" $INSTALLTO/js/custom.modernizr.js
+cp "${THISDIR}/web/foundation/js/vendor/jquery.js" $INSTALLTO/js/jquery.js
+cp "${THISDIR}/web/foundation/js/foundation/foundation*.js" $INSTALLTO/js/
+# copy scss
+cp "${THISDIR}/web/fiberdriver.scss" $INSTALLTO/sass/fiberdriver.scss
+cp "${THISDIR}/web/foundation/scss/normalize.scss" $INSTALLTO/sass/normalize.scss
+cp "${THISDIR}/web/foundation/scss/foundation.scss" $INSTALLTO/sass/foundation.scss
+cp "${THISDIR}/web/foundation/scss/foundation/_variables.scss" $INSTALLTO/sass/foundation/_variables.scss
+cp "${THISDIR}/web/foundation/scss/foundation/components/*" $INSTALLTO/sass/foundation/components/
 
 # compile the scss into css
 compass compile /var/local/fiberdriver
