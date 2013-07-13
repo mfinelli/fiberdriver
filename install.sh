@@ -90,3 +90,5 @@ $INSTALL ruby
 #gem update --system
 gem install compass
 
+# create the fiberdriver serve directory
+mkdir -p /var/local/fiberdriver
