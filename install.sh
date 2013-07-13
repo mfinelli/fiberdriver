@@ -85,7 +85,7 @@ esac
 $INSTALL nginx $PHP ruby
 
 # install gems
-if [ gem list -i compass = "true" ]; then
+if [ "$(gem list -i compass)" = "true" ]; then
 	gem update compass
 else
 	gem install compass
