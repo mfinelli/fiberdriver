@@ -95,9 +95,6 @@ INSTALLTO=/var/local/fiberdriver
 # create the fiberdriver serve directory
 mkdir -p $INSTALLTO
 
-# create the compass project
-compass create $INSTALLTO --css-dir "css" --javascripts-dir "js"
-
 # get the directory installing from
 unset CDPATH
 SOURCE="${BASH_SOURCE[0]}"
