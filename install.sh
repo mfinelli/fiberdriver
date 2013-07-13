@@ -105,6 +105,7 @@ while [ -h "$SOURCE" ]; do
 done
 THISDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 # copy fiberdriver files to the install directory
+cp "${THISDIR}/web/config.rb" $INSTALLTO/config.rb
 
 # compile the scss into css
 compass compile /var/local/fiberdriver
