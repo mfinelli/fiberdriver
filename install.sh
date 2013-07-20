@@ -26,7 +26,7 @@ echo "Fiberdriver Copyright (C) 2013 Mario Finelli"
 echo "This program comes with ABSOLUTELY NO WARRANTY; for details please visit https://gnu.org/licenses/gpl.txt"
 
 # install needs to be run as root
-if [ $(id -u) != "0" ]; then
+if [[ $(id -u) != "0" ]]; then
 	echo "Fiberdriver must be installed as root" 1>&2
 	exit 1
 fi
@@ -63,7 +63,7 @@ hash grep 2>/dev/null || software_not_found "grep"
 hash awk 2>/dev/null || software_not_found "awk"
 
 # error if the os-release doesn't exist
-[ -f /etc/os-release ] || { echo "Could not find OS information" 1>&2; exit 3; }
+[[ -f /etc/os-release ]] || { echo "Could not find OS information" 1>&2; exit 3; }
 
 # let's get the OS information and ask the user if it looks correct
 OS=$(cat /etc/os-release | grep '^PRETTY_NAME' | awk -F= '{ print $2 }')
@@ -73,7 +73,7 @@ confirm || { echo "Installation aborted."; exit 4; }
 # probe for the package manager and ask the user if it's right
 for manager in "${!managers[@]}"
 do
-	if [ -f $manager ]; then
+	if [[ -f $manager ]]; then
 		MANAGER=${managers[$manager]}
 		continue
 	fi
@@ -113,7 +113,7 @@ esac
 $INSTALL nginx $PHP ruby
 
 # install gems
-if [ "$(gem list -i compass)" = "true" ]; then
+if [[ "$(gem list -i compass)" = "true" ]]; then
 	gem update compass
 else
 	gem install compass --no-rdoc --no-ri
@@ -126,7 +126,7 @@ mkdir -p $INSTALLTO
 # get the directory installing from
 unset CDPATH
 SOURCE="${BASH_SOURCE[0]}"
-while [ -h "$SOURCE" ]; do
+while [[ -h "$SOURCE" ]]; do
 	THISDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 	SOURCE="$(readlink "$SOURCE")"
 	[[ $SOURCE != /* ]] && SOURCE="$THISDIR/$SOURCE"
