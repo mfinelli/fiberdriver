@@ -31,7 +31,7 @@ if [ $(id -u) != "0" ]; then
 	exit 1
 fi
 
-# package managers (@see line 87 if these options change)
+# package managers (@see line 93 if these options change)
 declare -A managers
 managers[/etc/redhat-release]=yum
 managers[/etc/arch-release]=pacman
@@ -97,6 +97,10 @@ case $MANAGER in
 	zypper ) INSTALL="zypper install" ;;
 	* ) echo "Unidentifed error"; exit 6; ;;
 esac
+
+# make sure the user wants to install
+echo -n "This will install Fiberdriver on your system. Continue? "
+confirm || { echo "Installation aborted."; exit 7; }
 
 # install php and php-fpm
 case $MANAGER in
