@@ -1,5 +1,23 @@
 #!/bin/bash
-# install fiberdriver
+
+#  install.sh
+#
+#  Copyright 2013 Mario Finelli
+#
+#  This file is part of Fiberdriver.
+#
+#  Fiberdriver is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  Fiberdriver is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with Fiberdriver.  If not, see <http://www.gnu.org/licenses/>.
 
 # install needs to be run as root
 if [ $(id -u) != "0" ]; then
@@ -7,7 +25,7 @@ if [ $(id -u) != "0" ]; then
 	exit 1
 fi
 
-# package managers (@see line 69 if these options change)
+# package managers (@see line 87 if these options change)
 declare -A managers
 managers[/etc/redhat-release]=yum
 managers[/etc/arch-release]=pacman
