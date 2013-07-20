@@ -112,7 +112,7 @@ $INSTALL nginx $PHP ruby
 if [ "$(gem list -i compass)" = "true" ]; then
 	gem update compass
 else
-	gem install compass
+	gem install compass --no-rdoc --no-ri
 fi
 
 INSTALLTO=/var/local/fiberdriver
