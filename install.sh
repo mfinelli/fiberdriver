@@ -112,6 +112,15 @@ esac
 # install software
 $INSTALL nginx $PHP ruby
 
+# on Arch Linux the gems are not added to PATH
+# if our package manager is pacman then we'll add it ourselves
+if [[ $MANAGER = "pacman" ]]; then
+	GEMPATH="/root/.gem/ruby/2.0.0/bin"
+	if [[ ! $PATH =~ (^|:)$GEMPATH(:|$) ]]; then
+		PATH+=:$GEMPATH
+	fi
+fi
+
 # install gems
 if [[ "$(gem list -i compass)" = "true" ]]; then
 	gem update compass
