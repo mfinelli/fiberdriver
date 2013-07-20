@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#  Fiberdriver - the open source server management system
+#
 #  install.sh
 #
 #  Copyright 2013 Mario Finelli
@@ -18,6 +20,10 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with Fiberdriver.  If not, see <http://www.gnu.org/licenses/>.
+
+# alert user of license
+echo "Fiberdriver Copyright (C) 2013 Mario Finelli"
+echo "This program comes with ABSOLUTELY NO WARRANTY; for details please visit https://gnu.org/licenses/gpl.txt"
 
 # install needs to be run as root
 if [ $(id -u) != "0" ]; then
