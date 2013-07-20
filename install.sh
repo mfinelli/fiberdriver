@@ -23,15 +23,17 @@
 
 # alert user of license
 echo "Fiberdriver Copyright (C) 2013 Mario Finelli"
-echo "This program comes with ABSOLUTELY NO WARRANTY; for details please visit https://gnu.org/licenses/gpl.txt"
+echo "This program comes with ABSOLUTELY NO WARRANTY;"
+echo "for details please visit https://gnu.org/licenses/gpl.txt"
+echo ""
 
 # install needs to be run as root
 if [[ $(id -u) != "0" ]]; then
-	echo "Fiberdriver must be installed as root" 1>&2
+	echo "Fiberdriver must be installed as root." 1>&2
 	exit 1
 fi
 
-# package managers (@see line 93 if these options change)
+# package managers (@see line 95 if these options change)
 declare -A managers
 managers[/etc/redhat-release]=yum
 managers[/etc/arch-release]=pacman
