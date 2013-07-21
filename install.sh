@@ -112,7 +112,7 @@ case $MANAGER in
 esac
 
 # install software
-$INSTALL nginx $PHP ruby
+$INSTALL nginx $PHP ruby openssl
 
 # on Arch Linux the gems are not added to PATH
 # if our package manager is pacman then we'll add it ourselves
@@ -162,3 +162,18 @@ cp "${THISDIR}"/web/foundation/scss/foundation/components/*.scss $INSTALLTO/sass
 
 # compile the scss into css
 compass compile /var/local/fiberdriver
+
+# create a self-signed ssl certificate (we use this for encryption only)
+mkdir -p /etc/fiberdriver/ssl
+# create a 128 character password from urandom stripping out non alpa-numerics
+password=$(tr -dc A-Za-z0-9_- < /dev/urandom | head -c 128; echo;)
+echo -n "${password}" | openssl genrsa -des3 -out /etc/fiberdriver/ssl/fiberdriver.key -passout stdin 2048
+# create a certificate signing request
+#subj='/C=./ST=./L=./O=./OU=./CN=fiberdriver/emailAddress=./'
+subj="/CN=fiberdriver"
+echo -n "${password}" | openssl req -new -batch -subj "${subj}" -key /etc/fiberdriver/ssl/fiberdriver.key -passin stdin -out /etc/fiberdriver/ssl/fiberdriver.csr
+# remove the password from the key so we don't have to enter it every time
+cp /etc/fiberdriver/ssl/fiberdriver.key /etc/fiberdriver/ssl/fiberdriver.key.pass
+echo -n "${password}" | openssl rsa -in /etc/fiberdriver/ssl/fiberdriver.key.pass -out /etc/fiberdriver/ssl/fiberdriver.key -passin stdin
+# self-sign a certificate
+openssl x509 -req -days 365 -in /etc/fiberdriver/ssl/fiberdriver.csr -signkey /etc/fiberdriver/ssl/fiberdriver.key -out /etc/fiberdriver/ssl/fiberdriver.crt
