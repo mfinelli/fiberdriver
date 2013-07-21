@@ -159,6 +159,8 @@ cp "${THISDIR}/web/foundation/scss/normalize.scss" $INSTALLTO/sass/normalize.scs
 cp "${THISDIR}/web/foundation/scss/foundation.scss" $INSTALLTO/sass/foundation.scss
 cp "${THISDIR}/web/foundation/scss/foundation/_variables.scss" $INSTALLTO/sass/foundation/_variables.scss
 cp "${THISDIR}"/web/foundation/scss/foundation/components/*.scss $INSTALLTO/sass/foundation/components/
+# copy index
+cp "${THISDIR}"/web/index.php $INSTALLTO/
 
 # compile the scss into css
 compass compile /var/local/fiberdriver
@@ -177,3 +179,27 @@ cp /etc/fiberdriver/ssl/fiberdriver.key /etc/fiberdriver/ssl/fiberdriver.key.pas
 echo -n "${password}" | openssl rsa -in /etc/fiberdriver/ssl/fiberdriver.key.pass -out /etc/fiberdriver/ssl/fiberdriver.key -passin stdin
 # self-sign a certificate
 openssl x509 -req -days 365 -in /etc/fiberdriver/ssl/fiberdriver.csr -signkey /etc/fiberdriver/ssl/fiberdriver.key -out /etc/fiberdriver/ssl/fiberdriver.crt
+
+# backup the original nginx.conf and php.ini
+cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.org
+cp /etc/php/php.ini /etc/php/php.ini.org
+
+# set permissions for fiberdriver files
+chmod -R 751 /var/local/fiberdriver
+chown -R http:http /var/local/fiberdriver
+
+# copy config files and start the nginx server
+case "${OS}" in
+	*"Arch Linux"* )
+		cp "${THISDIR}"/config/nginx.conf /etc/nginx/nginx.conf
+		cp "${THISDIR}"/config/arch.nginx.conf /etc/fiberdriver/nginx.conf
+		cp "${THISDIR}"/config/php.ini /etc/php/php.ini
+		systemctl stop nginx
+		systemctl enable nginx
+		systemctl start nginx
+		systemctl stop php-fpm
+		systemctl enable php-fpm
+		systemctl start php-fpm
+		;;
+	* ) echo "Unidentifed error"; exit 6; ;;
+esac
