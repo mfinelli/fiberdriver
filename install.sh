@@ -194,11 +194,19 @@ case "${OS}" in
 		cp "${THISDIR}"/config/nginx.conf /etc/nginx/nginx.conf
 		cp "${THISDIR}"/config/arch.nginx.conf /etc/fiberdriver/nginx.conf
 		cp "${THISDIR}"/config/php.ini /etc/php/php.ini
-		systemctl stop nginx
-		systemctl enable nginx
+		if [[ $(systemctl is-active nginx) == "active" ]]; then
+			systemctl stop nginx
+		fi
+		if [[ $(systemctl is-enabled nginx) == "disabled" ]]; then
+			systemctl enable nginx
+		fi
 		systemctl start nginx
-		systemctl stop php-fpm
-		systemctl enable php-fpm
+		if [[ $(systemctl is-active php-fpm) == "active" ]]; then
+			systemctl stop php-fpm
+		fi
+		if [[ $(systemctl is-enabled php-fpm) == "disabled" ]]; then
+			systemctl enable php-fpm
+		fi
 		systemctl start php-fpm
 		;;
 	* ) echo "Unidentifed error"; exit 6; ;;
