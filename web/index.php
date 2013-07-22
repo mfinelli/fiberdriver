@@ -15,7 +15,34 @@
 				</li>
 			</ul>
 		</nav>
-		<!--<h1>Fiber Driver Server Management</h1>-->
+		<div class="row">
+			<div class="large-3 columns">
+				<div class="section-container accordion" data-section="accordion">
+					<section class="section">
+						<p class="title"><a href="#">Configuration</a></p>
+						<div class="content">
+							<ul class="side-nav">
+								<li><a href="#">Fiberdriver</a></li>
+								<li><a href="#">Nginx</a></li>
+								<li><a href="#">PHP</a></li>
+								<li><a href="#">MariaDB</a></li>
+							</ul>
+						</div>
+					</section>
+					<section class="section">
+						<p class="title"><a href="#">Virtual Hosts</a></p>
+						<div class="content">
+							<ul class="side-nav">
+								<li><a href="#">Add New</a></li>
+							</ul>
+						</div>
+					</section>
+				</div>
+			</div>
+			<div class="large-9 columns">
+				<h2>Section</h2>
+			</div>
+		</div>
 		<script src="js/jquery.js"></script>
 		<script src="js/foundation.js"></script>
 		<script src="js/foundation.alerts.js"></script>
