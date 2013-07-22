@@ -145,7 +145,7 @@ done
 THISDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 # create directories if missing
-mkdir -p $INSTALLTO/js $INSTALLTO/sass $INSTALLTO/css $INSTALLTO/sass/foundation/components
+mkdir -p $INSTALLTO/js $INSTALLTO/sass $INSTALLTO/css $INSTALLTO/sass/foundation/components $INSTALLTO/include/yaml/Exception
 
 # copy fiberdriver files to the install directory
 cp "${THISDIR}/web/config.rb" $INSTALLTO/config.rb
@@ -161,6 +161,14 @@ cp "${THISDIR}/web/foundation/scss/foundation/_variables.scss" $INSTALLTO/sass/f
 cp "${THISDIR}"/web/foundation/scss/foundation/components/*.scss $INSTALLTO/sass/foundation/components/
 # copy index
 cp "${THISDIR}"/web/index.php $INSTALLTO/
+# copy yaml parser
+cp "${THISDIR}"/web/yaml/Dumper.php $INSTALLTO/include/yaml/
+cp "${THISDIR}"/web/yaml/Escaper.php $INSTALLTO/include/yaml/
+cp "${THISDIR}"/web/yaml/Inline.php $INSTALLTO/include/yaml/
+cp "${THISDIR}"/web/yaml/Parser.php $INSTALLTO/include/yaml/
+cp "${THISDIR}"/web/yaml/Unescaper.php $INSTALLTO/include/yaml/
+cp "${THISDIR}"/web/yaml/Yaml.php $INSTALLTO/include/yaml/
+cp "${THISDIR}"/web/yaml/Exception/* $INSTALLTO/include/yaml/Exception/
 
 # compile the scss into css
 compass compile /var/local/fiberdriver
