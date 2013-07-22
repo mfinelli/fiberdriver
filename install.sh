@@ -159,8 +159,9 @@ cp "${THISDIR}/web/foundation/scss/normalize.scss" $INSTALLTO/sass/normalize.scs
 cp "${THISDIR}/web/foundation/scss/foundation.scss" $INSTALLTO/sass/foundation.scss
 cp "${THISDIR}/web/foundation/scss/foundation/_variables.scss" $INSTALLTO/sass/foundation/_variables.scss
 cp "${THISDIR}"/web/foundation/scss/foundation/components/*.scss $INSTALLTO/sass/foundation/components/
-# copy index
+# copy web files
 cp "${THISDIR}"/web/index.php $INSTALLTO/
+cp "${THISDIR}"/web/template.php $INSTALLTO/include/
 # copy yaml parser
 cp "${THISDIR}"/web/yaml/Dumper.php $INSTALLTO/include/yaml/
 cp "${THISDIR}"/web/yaml/Escaper.php $INSTALLTO/include/yaml/
