@@ -29,9 +29,11 @@ echo ""
 
 # get command line options
 DEPLOYONLY=false
+GENCSS=true
 while [ "$1" ]; do
 	case "$1" in
 		-D | --deploy-only ) DEPLOYONLY=true; shift ;;
+		-C | --no-sass ) GENCSS=false; shift ;;
 		* ) break ;;
 	esac
 done
@@ -185,8 +187,10 @@ cp "${THISDIR}"/web/yaml/Unescaper.php $INSTALLTO/include/yaml/
 cp "${THISDIR}"/web/yaml/Yaml.php $INSTALLTO/include/yaml/
 cp "${THISDIR}"/web/yaml/Exception/* $INSTALLTO/include/yaml/Exception/
 
-# compile the scss into css
-compass compile /var/local/fiberdriver
+# compile the scss into css unless told not to
+if [[ $GENCSS = true ]]; then
+	compass compile /var/local/fiberdriver
+fi
 
 # skip new key creation if we're only deploying
 if [[ $DEPLOYONLY != true ]]; then

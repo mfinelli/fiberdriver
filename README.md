@@ -26,6 +26,8 @@ To contribute you can fork the repository on github, do all of your work in a fe
 
 If you're working on web files, you can pass `--deploy-only` (`-D`) to `install.sh` to not have to go through the entire install process, which should make development faster and easier.
 
+If you don't want to update the css files pass `--no-sass` (`-C`) to `install.sh` and the script will skip `compass compile`.
+
 License
 ------
 Fiberdriver is licensed under the GPLv3 (<https://gnu.org/licenses/gpl.txt>)
