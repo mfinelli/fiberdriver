@@ -19,6 +19,13 @@ Installation of fiberdriver is easy! Just `git clone --recursive https://github.
 
 To update just `git pull` and run `sudo ./install.sh` again
 
+Contribute
+----------
+To contribute you can fork the repository on github, do all of your work in a feature branch and open a [pull request](https://help.github.com/articles/using-pull-requests).
+
+
+If you're working on web files, you can pass `--deploy-only` (`-D`) to `install.sh` to not have to go through the entire install process, which should make development faster and easier.
+
 License
 ------
 Fiberdriver is licensed under the GPLv3 (<https://gnu.org/licenses/gpl.txt>)
