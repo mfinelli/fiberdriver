@@ -27,6 +27,15 @@ echo "This program comes with ABSOLUTELY NO WARRANTY;"
 echo "for details please visit https://gnu.org/licenses/gpl.txt"
 echo ""
 
+# get command line options
+DEPLOYONLY=false
+while [ "$1" ]; do
+	case "$1" in
+		-D | --deploy-only ) DEPLOYONLY=true; shift ;;
+		* ) break ;;
+	esac
+done
+
 # install needs to be run as root
 if [[ $(id -u) != "0" ]]; then
 	echo "Fiberdriver must be installed as root." 1>&2
@@ -111,8 +120,20 @@ case $MANAGER in
 	* ) echo "Unidentified error"; exit 6; ;;
 esac
 
-# install software
-$INSTALL nginx $PHP ruby openssl
+# skip install if we're only deploying
+if [[ $DEPLOYONLY != true ]]; then
+
+	# install software
+	$INSTALL nginx $PHP ruby openssl
+
+	# install gems
+	if [[ "$(gem list -i compass)" = "true" ]]; then
+		gem update compass
+	else
+		gem install compass --no-rdoc --no-ri
+	fi
+
+fi
 
 # on Arch Linux the gems are not added to PATH
 # if our package manager is pacman then we'll add it ourselves
@@ -121,13 +142,6 @@ if [[ $MANAGER = "pacman" ]]; then
 	if [[ ! $PATH =~ (^|:)$GEMPATH(:|$) ]]; then
 		PATH+=:$GEMPATH
 	fi
-fi
-
-# install gems
-if [[ "$(gem list -i compass)" = "true" ]]; then
-	gem update compass
-else
-	gem install compass --no-rdoc --no-ri
 fi
 
 INSTALLTO=/var/local/fiberdriver
@@ -174,20 +188,25 @@ cp "${THISDIR}"/web/yaml/Exception/* $INSTALLTO/include/yaml/Exception/
 # compile the scss into css
 compass compile /var/local/fiberdriver
 
-# create a self-signed ssl certificate (we use this for encryption only)
-mkdir -p /etc/fiberdriver/ssl
-# create a 128 character password from urandom stripping out non alpa-numerics
-password=$(tr -dc A-Za-z0-9_- < /dev/urandom | head -c 128; echo;)
-echo -n "${password}" | openssl genrsa -des3 -out /etc/fiberdriver/ssl/fiberdriver.key -passout stdin 2048
-# create a certificate signing request
-#subj='/C=./ST=./L=./O=./OU=./CN=fiberdriver/emailAddress=./'
-subj="/CN=fiberdriver"
-echo -n "${password}" | openssl req -new -batch -subj "${subj}" -key /etc/fiberdriver/ssl/fiberdriver.key -passin stdin -out /etc/fiberdriver/ssl/fiberdriver.csr
-# remove the password from the key so we don't have to enter it every time
-cp /etc/fiberdriver/ssl/fiberdriver.key /etc/fiberdriver/ssl/fiberdriver.key.pass
-echo -n "${password}" | openssl rsa -in /etc/fiberdriver/ssl/fiberdriver.key.pass -out /etc/fiberdriver/ssl/fiberdriver.key -passin stdin
-# self-sign a certificate
-openssl x509 -req -days 365 -in /etc/fiberdriver/ssl/fiberdriver.csr -signkey /etc/fiberdriver/ssl/fiberdriver.key -out /etc/fiberdriver/ssl/fiberdriver.crt
+# skip new key creation if we're only deploying
+if [[ $DEPLOYONLY != true ]]; then
+
+	# create a self-signed ssl certificate (we use this for encryption only)
+	mkdir -p /etc/fiberdriver/ssl
+	# create a 128 character password from urandom stripping out non alpa-numerics
+	password=$(tr -dc A-Za-z0-9_- < /dev/urandom | head -c 128; echo;)
+	echo -n "${password}" | openssl genrsa -des3 -out /etc/fiberdriver/ssl/fiberdriver.key -passout stdin 2048
+	# create a certificate signing request
+	#subj='/C=./ST=./L=./O=./OU=./CN=fiberdriver/emailAddress=./'
+	subj="/CN=fiberdriver"
+	echo -n "${password}" | openssl req -new -batch -subj "${subj}" -key /etc/fiberdriver/ssl/fiberdriver.key -passin stdin -out /etc/fiberdriver/ssl/fiberdriver.csr
+	# remove the password from the key so we don't have to enter it every time
+	cp /etc/fiberdriver/ssl/fiberdriver.key /etc/fiberdriver/ssl/fiberdriver.key.pass
+	echo -n "${password}" | openssl rsa -in /etc/fiberdriver/ssl/fiberdriver.key.pass -out /etc/fiberdriver/ssl/fiberdriver.key -passin stdin
+	# self-sign a certificate
+	openssl x509 -req -days 365 -in /etc/fiberdriver/ssl/fiberdriver.csr -signkey /etc/fiberdriver/ssl/fiberdriver.key -out /etc/fiberdriver/ssl/fiberdriver.crt
+
+fi
 
 # backup the original nginx.conf and php.ini (if there are not already backups)
 if [[ ! -f /etc/nginx/nginx.conf.org ]]; then
