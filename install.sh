@@ -189,9 +189,13 @@ echo -n "${password}" | openssl rsa -in /etc/fiberdriver/ssl/fiberdriver.key.pas
 # self-sign a certificate
 openssl x509 -req -days 365 -in /etc/fiberdriver/ssl/fiberdriver.csr -signkey /etc/fiberdriver/ssl/fiberdriver.key -out /etc/fiberdriver/ssl/fiberdriver.crt
 
-# backup the original nginx.conf and php.ini
-cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.org
-cp /etc/php/php.ini /etc/php/php.ini.org
+# backup the original nginx.conf and php.ini (if there are not already backups)
+if [[ ! -f /etc/nginx/nginx.conf.org ]]; then
+	cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.org
+fi
+if [[ ! -f /etc/php/php.ini.org ]]; then
+	cp /etc/php/php.ini /etc/php/php.ini.org
+fi
 
 # set permissions for fiberdriver files
 chmod -R 751 /var/local/fiberdriver
